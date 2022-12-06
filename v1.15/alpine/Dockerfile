@@ -27,6 +27,7 @@ RUN apk update \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
 
+RUN fluent-gem install fluent-plugin-elasticsearch
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
     # for log storage (maybe shared with host)
     && mkdir -p /fluentd/log \
