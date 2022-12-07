@@ -23,11 +23,16 @@ RUN apk update \
  && gem install async -v 1.30.3 \
  && gem install async-http -v 0.56.6 \
  && gem install fluentd -v 1.15.3 \
- && gem install bigdecimal -v 1.4.4 \
- && apk del .build-deps \
- && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+ && gem install bigdecimal -v 1.4.4
 
-RUN fluent-gem install fluent-plugin-elasticsearch
+RUN gem uninstall -I elasticsearch && gem install elasticsearch -v 7.17.7
+RUN gem install fluent-plugin-elasticsearch
+RUN gem install fluent-plugin-rewrite-tag-filter
+RUN gem install fluent-plugin-multi-format-parser
+RUN apk del .build-deps 
+RUN rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem /usr/lib/ruby/gems/3.*/gems/fluentd-*/test
+
+
 RUN addgroup -S fluent && adduser -S -G fluent fluent \
     # for log storage (maybe shared with host)
     && mkdir -p /fluentd/log \

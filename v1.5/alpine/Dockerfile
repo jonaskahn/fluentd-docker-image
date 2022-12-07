@@ -23,7 +23,7 @@ RUN apk update \
  && gem install bigdecimal -v 1.3.5 \
  && apk del .build-deps \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
-
+RUN fluent-gem install fluent-plugin-elasticsearch
 RUN addgroup -S fluent && adduser -S -g fluent fluent \
     # for log storage (maybe shared with host)
     && mkdir -p /fluentd/log \
